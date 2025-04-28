@@ -1,12 +1,12 @@
 import React from "react";
 import AddCart from "./AddCart";
-import UsersPage from "./user/page";
+import Link from "next/link";
 
 const ProductCard = () => {
   return (
     <div>
       <h1 className="text-base text-black">Hello world</h1>
-      <UsersPage />
+      <Link href={"./user"}>Users</Link>
       <AddCart />
     </div>
   );
