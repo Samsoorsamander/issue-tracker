@@ -1,7 +1,11 @@
 import React from "react";
 import UserTable from "./UserTable";
 
-const UsersPage = async () => {
+interface Props {
+  searchParams: { sortOrder: string };
+}
+
+const UsersPage = ({ searchParams: { sortOrder } }: Props) => {
   // Insted of fetching data in client side we can easly fetch data in server side
   // without any states and effects
 
@@ -11,7 +15,7 @@ const UsersPage = async () => {
   return (
     <>
       <h1>Users</h1>
-      <UserTable />
+      <UserTable sortOrder={sortOrder} />
     </>
   );
 };
