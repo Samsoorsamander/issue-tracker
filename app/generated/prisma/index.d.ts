@@ -889,6 +889,7 @@ export namespace Prisma {
     name: string | null
     followers: number | null
     isActive: boolean | null
+    registeredAT: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -897,6 +898,7 @@ export namespace Prisma {
     name: string | null
     followers: number | null
     isActive: boolean | null
+    registeredAT: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -905,6 +907,7 @@ export namespace Prisma {
     name: number
     followers: number
     isActive: number
+    registeredAT: number
     _all: number
   }
 
@@ -925,6 +928,7 @@ export namespace Prisma {
     name?: true
     followers?: true
     isActive?: true
+    registeredAT?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -933,6 +937,7 @@ export namespace Prisma {
     name?: true
     followers?: true
     isActive?: true
+    registeredAT?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -941,6 +946,7 @@ export namespace Prisma {
     name?: true
     followers?: true
     isActive?: true
+    registeredAT?: true
     _all?: true
   }
 
@@ -1036,6 +1042,7 @@ export namespace Prisma {
     name: string
     followers: number
     isActive: boolean
+    registeredAT: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1063,6 +1070,7 @@ export namespace Prisma {
     name?: boolean
     followers?: boolean
     isActive?: boolean
+    registeredAT?: boolean
   }, ExtArgs["result"]["user"]>
 
 
@@ -1073,9 +1081,10 @@ export namespace Prisma {
     name?: boolean
     followers?: boolean
     isActive?: boolean
+    registeredAT?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "followers" | "isActive", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "followers" | "isActive" | "registeredAT", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1086,6 +1095,7 @@ export namespace Prisma {
       name: string
       followers: number
       isActive: boolean
+      registeredAT: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1460,6 +1470,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly followers: FieldRef<"User", 'Int'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly registeredAT: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -1800,7 +1811,8 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     followers: 'followers',
-    isActive: 'isActive'
+    isActive: 'isActive',
+    registeredAT: 'registeredAT'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1849,6 +1861,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1867,6 +1886,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     followers?: IntFilter<"User"> | number
     isActive?: BoolFilter<"User"> | boolean
+    registeredAT?: DateTimeFilter<"User"> | Date | string
   }
 
   export type UserOrderByWithRelationInput = {
@@ -1875,6 +1895,7 @@ export namespace Prisma {
     name?: SortOrder
     followers?: SortOrder
     isActive?: SortOrder
+    registeredAT?: SortOrder
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -1887,6 +1908,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     followers?: IntFilter<"User"> | number
     isActive?: BoolFilter<"User"> | boolean
+    registeredAT?: DateTimeFilter<"User"> | Date | string
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -1895,6 +1917,7 @@ export namespace Prisma {
     name?: SortOrder
     followers?: SortOrder
     isActive?: SortOrder
+    registeredAT?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -1911,6 +1934,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     followers?: IntWithAggregatesFilter<"User"> | number
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    registeredAT?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -1918,6 +1942,7 @@ export namespace Prisma {
     name: string
     followers?: number
     isActive?: boolean
+    registeredAT?: Date | string
   }
 
   export type UserUncheckedCreateInput = {
@@ -1926,6 +1951,7 @@ export namespace Prisma {
     name: string
     followers?: number
     isActive?: boolean
+    registeredAT?: Date | string
   }
 
   export type UserUpdateInput = {
@@ -1933,6 +1959,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     followers?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    registeredAT?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateInput = {
@@ -1941,6 +1968,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     followers?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    registeredAT?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyInput = {
@@ -1949,6 +1977,7 @@ export namespace Prisma {
     name: string
     followers?: number
     isActive?: boolean
+    registeredAT?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -1956,6 +1985,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     followers?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    registeredAT?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -1964,6 +1994,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     followers?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    registeredAT?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -1997,6 +2028,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type UserOrderByRelevanceInput = {
     fields: UserOrderByRelevanceFieldEnum | UserOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -2009,6 +2051,7 @@ export namespace Prisma {
     name?: SortOrder
     followers?: SortOrder
     isActive?: SortOrder
+    registeredAT?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -2022,6 +2065,7 @@ export namespace Prisma {
     name?: SortOrder
     followers?: SortOrder
     isActive?: SortOrder
+    registeredAT?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -2030,6 +2074,7 @@ export namespace Prisma {
     name?: SortOrder
     followers?: SortOrder
     isActive?: SortOrder
+    registeredAT?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -2079,6 +2124,20 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2093,6 +2152,10 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -2124,6 +2187,17 @@ export namespace Prisma {
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2177,6 +2251,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
 
