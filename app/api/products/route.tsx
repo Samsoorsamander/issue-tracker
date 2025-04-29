@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import schema from "../users/schema";
+import schema from "./schema";
 
 export function GET(request: NextRequest) {
   return NextResponse.json([
@@ -18,5 +18,8 @@ export async function POST(request: NextRequest) {
     // ⬆️ You need to RETURN here
   }
 
-  return NextResponse.json({ id: 1, name: body.name }, { status: 201 });
+  return NextResponse.json(
+    { id: 1, name: body.name, price: body.price },
+    { status: 201 }
+  );
 }
