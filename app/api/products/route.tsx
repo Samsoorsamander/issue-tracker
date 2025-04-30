@@ -16,9 +16,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.errors, { status: 400 });
     // ⬆️ You need to RETURN here
   }
-
-  return NextResponse.json(
-    { id: 1, name: body.name, price: body.price },
-    { status: 201 }
-  );
+  const newProduct = await prisma.product.create({
+    data: {
+      name: body.name,
+      price: body.price,
+    },
+  });
+  return NextResponse.json(newProduct, { status: 201 });
 }
