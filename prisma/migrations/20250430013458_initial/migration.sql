@@ -5,6 +5,7 @@ CREATE TABLE `User` (
     `name` VARCHAR(191) NOT NULL,
     `followers` INTEGER NOT NULL DEFAULT 0,
     `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `registeredAT` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
