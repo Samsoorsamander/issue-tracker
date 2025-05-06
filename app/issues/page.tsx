@@ -10,11 +10,6 @@ const IssuePage = async () => {
   await delay(2000);
   return (
     <div>
-      <div className="mb-5">
-        <Button>
-          <Link href={"/issues/new"}>New Issue</Link>
-        </Button>
-      </div>
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
