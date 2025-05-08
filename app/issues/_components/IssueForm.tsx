@@ -1,5 +1,6 @@
 "use client";
 import { ErrorMessage, Spinner } from "@/app/components";
+import { Issue } from "@/app/generated/prisma";
 import { issueSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextField } from "@radix-ui/themes";
@@ -16,7 +17,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 });
 
 type IssueFormData = z.infer<typeof issueSchema>;
-const IssueForm = () => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
     register,
     control,
@@ -47,13 +48,19 @@ const IssueForm = () => {
         </Callout.Root>
       )}
       <form className="max-w-xl space-y-3" onSubmit={onSubmit}>
-        <TextField.Root size="3" placeholder="Title" {...register("title")} />
+        <TextField.Root
+          defaultValue={issue?.title}
+          size="3"
+          placeholder="Title"
+          {...register("title")}
+        />
 
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
         <Controller
           control={control}
           name="description"
+          defaultValue={issue?.description}
           render={({ field }) => (
             <SimpleMDE placeholder="Description" {...field} />
           )}
