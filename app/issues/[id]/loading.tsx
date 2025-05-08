@@ -11,9 +11,7 @@ const loading = () => {
         <Skeleton width="8rem" />
       </Flex>
       <Card className="prose" mt="4">
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
+        <Skeleton count={3} />
       </Card>
     </Box>
   );
