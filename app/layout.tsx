@@ -34,7 +34,7 @@ export default function RootLayout({
           <Theme accentColor="iris" panelBackground="solid">
             <NavBar />
             <main className="p-5">
-              <Box className="px-20">{children}</Box>
+              <Box className="lg:px-20">{children}</Box>
             </main>
           </Theme>
         </AuthProvider>

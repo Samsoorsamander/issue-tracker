@@ -4,14 +4,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classNames from "classnames";
-import {
-  Avatar,
-  Box,
-  Container,
-  DropdownMenu,
-  Flex,
-  Text,
-} from "@radix-ui/themes";
+import { Avatar, Box, DropdownMenu, Flex, Text } from "@radix-ui/themes";
 import { useSession, signOut } from "next-auth/react";
 
 const NavBar = () => {
@@ -25,7 +18,7 @@ const NavBar = () => {
 
   return (
     <nav className="text-black mb-5 border-b py-3 px-5">
-      <Box className="px-20">
+      <Box className="lg:px-20">
         <Flex justify="between">
           <Flex gap="3" align="center">
             <Link href={"/"}>
@@ -57,9 +50,10 @@ const NavBar = () => {
                     <Avatar
                       src={session.user?.image || ""}
                       fallback="?"
-                      size="2"
+                      size="3"
                       radius="full"
                       className="cursor-pointer"
+                      referrerPolicy="no-referrer"
                     />
                   </span>
                 </DropdownMenu.Trigger>
