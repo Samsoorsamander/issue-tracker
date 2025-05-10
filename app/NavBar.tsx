@@ -16,7 +16,9 @@ const NavBar = () => {
             <Link href={"/"}>
               <AiFillBug />
             </Link>
+            <NavLinks />
           </Flex>
+          <AuthStatus />
         </Flex>
       </Box>
     </nav>
@@ -39,9 +41,8 @@ const NavLinks = () => {
           <Link
             href={link.href}
             className={classNames({
-              "text-zinc-900": link.href === currentPath,
-              "text-zinc-500": link.href !== currentPath,
-              "hover:text-zinc-800": true,
+              "nav-link": true,
+              "!text-zinc-900": link.href === currentPath,
             })}
           >
             {link.label}
@@ -58,7 +59,11 @@ const AuthStatus = () => {
   if (status === "loading") return null;
 
   if (status === "unauthenticated")
-    return <Link href="/api/auth/signin">Login</Link>;
+    return (
+      <Link className="nav-link" href="/api/auth/signin">
+        Login
+      </Link>
+    );
 
   return (
     <Box>
