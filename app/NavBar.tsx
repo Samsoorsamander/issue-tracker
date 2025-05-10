@@ -4,27 +4,35 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classNames from "classnames";
-import { Avatar, Box, Container, DropdownMenu, Flex } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
+import {
+  Avatar,
+  Box,
+  Container,
+  DropdownMenu,
+  Flex,
+  Text,
+} from "@radix-ui/themes";
+import { useSession, signOut } from "next-auth/react";
 
 const NavBar = () => {
   const currentPath = usePathname();
-  const link = [
+  const links = [
     { label: "Dashboard", href: "/" },
     { label: "Issues", href: "/issues" },
   ];
 
-  const { status, data: session } = useSession();
+  const { data: session } = useSession();
+
   return (
-    <nav className=" text-black mb-5 border-b py-3 px-5 ">
-      <Container>
+    <nav className="text-black mb-5 border-b py-3 px-5">
+      <Box className="px-20">
         <Flex justify="between">
           <Flex gap="3" align="center">
             <Link href={"/"}>
               <AiFillBug />
             </Link>
             <ul className="flex space-x-5">
-              {link.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -42,23 +50,39 @@ const NavBar = () => {
           </Flex>
 
           <Box>
-            {status === "authenticated" && (
+            {session ? (
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
-                  <Avatar
-                    src={session.user!.image!}
-                    fallback="?"
-                    radius="full"
-                  />
+                  <span>
+                    <Avatar
+                      src={session.user?.image || ""}
+                      fallback="?"
+                      size="2"
+                      radius="full"
+                      className="cursor-pointer"
+                    />
+                  </span>
                 </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  <DropdownMenu.Label>
+                    <Text size="2">{session.user?.email}</Text>
+                  </DropdownMenu.Label>
+                  <DropdownMenu.Item
+                    onSelect={(e) => {
+                      e.preventDefault(); // prevent Radix default behavior
+                      signOut();
+                    }}
+                  >
+                    Log out
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
               </DropdownMenu.Root>
-            )}
-            {status === "unauthenticated" && (
+            ) : (
               <Link href="/api/auth/signin">Login</Link>
             )}
           </Box>
         </Flex>
-      </Container>
+      </Box>
     </nav>
   );
 };
