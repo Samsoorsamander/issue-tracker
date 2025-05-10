@@ -159,12 +159,11 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "mysql://root:samsoor@@@localhost:3306/issue-tracker"
       }
     }
   },

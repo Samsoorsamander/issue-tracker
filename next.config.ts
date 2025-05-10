@@ -11,8 +11,10 @@ const nextConfig = {
       },
     ],
   },
-
   optimizeFonts: false,
+  experimental: {
+    turbo: false, // ✅ this disables Turbopack completely
+  },
 };
 
 module.exports = nextConfig;
