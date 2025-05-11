@@ -1213,11 +1213,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     accounts: number
     sessions: number
+    assigedIssues: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    assigedIssues?: boolean | UserCountOutputTypeCountAssigedIssuesArgs
   }
 
   // Custom InputTypes
@@ -1243,6 +1245,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAssigedIssuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IssueWhereInput
   }
 
 
@@ -1277,6 +1286,7 @@ export namespace Prisma {
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
+    assignedToUserId: string | null
   }
 
   export type IssueMaxAggregateOutputType = {
@@ -1286,6 +1296,7 @@ export namespace Prisma {
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
+    assignedToUserId: string | null
   }
 
   export type IssueCountAggregateOutputType = {
@@ -1295,6 +1306,7 @@ export namespace Prisma {
     status: number
     createdAt: number
     updatedAt: number
+    assignedToUserId: number
     _all: number
   }
 
@@ -1314,6 +1326,7 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
+    assignedToUserId?: true
   }
 
   export type IssueMaxAggregateInputType = {
@@ -1323,6 +1336,7 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
+    assignedToUserId?: true
   }
 
   export type IssueCountAggregateInputType = {
@@ -1332,6 +1346,7 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
+    assignedToUserId?: true
     _all?: true
   }
 
@@ -1428,6 +1443,7 @@ export namespace Prisma {
     status: $Enums.Status
     createdAt: Date
     updatedAt: Date
+    assignedToUserId: string | null
     _count: IssueCountAggregateOutputType | null
     _avg: IssueAvgAggregateOutputType | null
     _sum: IssueSumAggregateOutputType | null
@@ -1456,6 +1472,8 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    assignedToUserId?: boolean
+    assignedToUser?: boolean | Issue$assignedToUserArgs<ExtArgs>
   }, ExtArgs["result"]["issue"]>
 
 
@@ -1467,13 +1485,19 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    assignedToUserId?: boolean
   }
 
-  export type IssueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["issue"]>
+  export type IssueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "updatedAt" | "assignedToUserId", ExtArgs["result"]["issue"]>
+  export type IssueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assignedToUser?: boolean | Issue$assignedToUserArgs<ExtArgs>
+  }
 
   export type $IssuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Issue"
-    objects: {}
+    objects: {
+      assignedToUser: Prisma.$UserPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
@@ -1481,6 +1505,7 @@ export namespace Prisma {
       status: $Enums.Status
       createdAt: Date
       updatedAt: Date
+      assignedToUserId: string | null
     }, ExtArgs["result"]["issue"]>
     composites: {}
   }
@@ -1821,6 +1846,7 @@ export namespace Prisma {
    */
   export interface Prisma__IssueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    assignedToUser<T extends Issue$assignedToUserArgs<ExtArgs> = {}>(args?: Subset<T, Issue$assignedToUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1856,6 +1882,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Issue", 'Status'>
     readonly createdAt: FieldRef<"Issue", 'DateTime'>
     readonly updatedAt: FieldRef<"Issue", 'DateTime'>
+    readonly assignedToUserId: FieldRef<"Issue", 'String'>
   }
     
 
@@ -1872,6 +1899,10 @@ export namespace Prisma {
      * Omit specific fields from the Issue
      */
     omit?: IssueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
     /**
      * Filter, which Issue to fetch.
      */
@@ -1891,6 +1922,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * Filter, which Issue to fetch.
      */
     where: IssueWhereUniqueInput
@@ -1908,6 +1943,10 @@ export namespace Prisma {
      * Omit specific fields from the Issue
      */
     omit?: IssueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
     /**
      * Filter, which Issue to fetch.
      */
@@ -1957,6 +1996,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * Filter, which Issue to fetch.
      */
     where?: IssueWhereInput
@@ -2005,6 +2048,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * Filter, which Issues to fetch.
      */
     where?: IssueWhereInput
@@ -2048,6 +2095,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * The data needed to create a Issue.
      */
     data: XOR<IssueCreateInput, IssueUncheckedCreateInput>
@@ -2076,6 +2127,10 @@ export namespace Prisma {
      * Omit specific fields from the Issue
      */
     omit?: IssueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
     /**
      * The data needed to update a Issue.
      */
@@ -2117,6 +2172,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * The filter to search for the Issue to update in case it exists.
      */
     where: IssueWhereUniqueInput
@@ -2143,6 +2202,10 @@ export namespace Prisma {
      */
     omit?: IssueOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    /**
      * Filter which Issue to delete.
      */
     where: IssueWhereUniqueInput
@@ -2163,6 +2226,25 @@ export namespace Prisma {
   }
 
   /**
+   * Issue.assignedToUser
+   */
+  export type Issue$assignedToUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Issue without action
    */
   export type IssueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2174,6 +2256,10 @@ export namespace Prisma {
      * Omit specific fields from the Issue
      */
     omit?: IssueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
   }
 
 
@@ -4309,6 +4395,7 @@ export namespace Prisma {
     image?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    assigedIssues?: boolean | User$assigedIssuesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4327,6 +4414,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    assigedIssues?: boolean | User$assigedIssuesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -4335,6 +4423,7 @@ export namespace Prisma {
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      assigedIssues: Prisma.$IssuePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4685,6 +4774,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assigedIssues<T extends User$assigedIssuesArgs<ExtArgs> = {}>(args?: Subset<T, User$assigedIssuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5108,6 +5198,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.assigedIssues
+   */
+  export type User$assigedIssuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Issue
+     */
+    select?: IssueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Issue
+     */
+    omit?: IssueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IssueInclude<ExtArgs> | null
+    where?: IssueWhereInput
+    orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[]
+    cursor?: IssueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[]
   }
 
   /**
@@ -6009,7 +6123,8 @@ export namespace Prisma {
     description: 'description',
     status: 'status',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    assignedToUserId: 'assignedToUserId'
   };
 
   export type IssueScalarFieldEnum = (typeof IssueScalarFieldEnum)[keyof typeof IssueScalarFieldEnum]
@@ -6072,20 +6187,21 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-  export const IssueOrderByRelevanceFieldEnum: {
-    title: 'title',
-    description: 'description'
-  };
-
-  export type IssueOrderByRelevanceFieldEnum = (typeof IssueOrderByRelevanceFieldEnum)[keyof typeof IssueOrderByRelevanceFieldEnum]
-
-
   export const NullsOrder: {
     first: 'first',
     last: 'last'
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const IssueOrderByRelevanceFieldEnum: {
+    title: 'title',
+    description: 'description',
+    assignedToUserId: 'assignedToUserId'
+  };
+
+  export type IssueOrderByRelevanceFieldEnum = (typeof IssueOrderByRelevanceFieldEnum)[keyof typeof IssueOrderByRelevanceFieldEnum]
 
 
   export const AccountOrderByRelevanceFieldEnum: {
@@ -6186,6 +6302,8 @@ export namespace Prisma {
     status?: EnumStatusFilter<"Issue"> | $Enums.Status
     createdAt?: DateTimeFilter<"Issue"> | Date | string
     updatedAt?: DateTimeFilter<"Issue"> | Date | string
+    assignedToUserId?: StringNullableFilter<"Issue"> | string | null
+    assignedToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type IssueOrderByWithRelationInput = {
@@ -6195,6 +6313,8 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    assignedToUserId?: SortOrderInput | SortOrder
+    assignedToUser?: UserOrderByWithRelationInput
     _relevance?: IssueOrderByRelevanceInput
   }
 
@@ -6208,6 +6328,8 @@ export namespace Prisma {
     status?: EnumStatusFilter<"Issue"> | $Enums.Status
     createdAt?: DateTimeFilter<"Issue"> | Date | string
     updatedAt?: DateTimeFilter<"Issue"> | Date | string
+    assignedToUserId?: StringNullableFilter<"Issue"> | string | null
+    assignedToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type IssueOrderByWithAggregationInput = {
@@ -6217,6 +6339,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    assignedToUserId?: SortOrderInput | SortOrder
     _count?: IssueCountOrderByAggregateInput
     _avg?: IssueAvgOrderByAggregateInput
     _max?: IssueMaxOrderByAggregateInput
@@ -6234,6 +6357,7 @@ export namespace Prisma {
     status?: EnumStatusWithAggregatesFilter<"Issue"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Issue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Issue"> | Date | string
+    assignedToUserId?: StringNullableWithAggregatesFilter<"Issue"> | string | null
   }
 
   export type AccountWhereInput = {
@@ -6393,6 +6517,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    assigedIssues?: IssueListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -6404,6 +6529,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
+    assigedIssues?: IssueOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -6419,6 +6545,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    assigedIssues?: IssueListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6495,6 +6622,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedToUser?: UserCreateNestedOneWithoutAssigedIssuesInput
   }
 
   export type IssueUncheckedCreateInput = {
@@ -6504,6 +6632,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedToUserId?: string | null
   }
 
   export type IssueUpdateInput = {
@@ -6512,6 +6641,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedToUser?: UserUpdateOneWithoutAssigedIssuesNestedInput
   }
 
   export type IssueUncheckedUpdateInput = {
@@ -6521,6 +6651,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedToUserId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IssueCreateManyInput = {
@@ -6530,6 +6661,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedToUserId?: string | null
   }
 
   export type IssueUpdateManyMutationInput = {
@@ -6547,6 +6679,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedToUserId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateInput = {
@@ -6710,6 +6843,7 @@ export namespace Prisma {
     image?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6721,6 +6855,7 @@ export namespace Prisma {
     image?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueUncheckedCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserUpdateInput = {
@@ -6732,6 +6867,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6743,6 +6879,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUncheckedUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6858,6 +6995,31 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type IssueOrderByRelevanceInput = {
     fields: IssueOrderByRelevanceFieldEnum | IssueOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -6871,6 +7033,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    assignedToUserId?: SortOrder
   }
 
   export type IssueAvgOrderByAggregateInput = {
@@ -6884,6 +7047,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    assignedToUserId?: SortOrder
   }
 
   export type IssueMinOrderByAggregateInput = {
@@ -6893,6 +7057,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    assignedToUserId?: SortOrder
   }
 
   export type IssueSumOrderByAggregateInput = {
@@ -6957,7 +7122,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -6969,7 +7134,10 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -6986,11 +7154,6 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type AccountOrderByRelevanceInput = {
@@ -7055,24 +7218,6 @@ export namespace Prisma {
 
   export type AccountSumOrderByAggregateInput = {
     expires_at?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7141,11 +7286,21 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type IssueListRelationFilter = {
+    every?: IssueWhereInput
+    some?: IssueWhereInput
+    none?: IssueWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IssueOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7225,6 +7380,12 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
+  export type UserCreateNestedOneWithoutAssigedIssuesInput = {
+    create?: XOR<UserCreateWithoutAssigedIssuesInput, UserUncheckedCreateWithoutAssigedIssuesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssigedIssuesInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -7237,6 +7398,16 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type UserUpdateOneWithoutAssigedIssuesNestedInput = {
+    create?: XOR<UserCreateWithoutAssigedIssuesInput, UserUncheckedCreateWithoutAssigedIssuesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssigedIssuesInput
+    upsert?: UserUpsertWithoutAssigedIssuesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssigedIssuesInput, UserUpdateWithoutAssigedIssuesInput>, UserUncheckedUpdateWithoutAssigedIssuesInput>
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -7245,14 +7416,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -7299,6 +7470,13 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type IssueCreateNestedManyWithoutAssignedToUserInput = {
+    create?: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput> | IssueCreateWithoutAssignedToUserInput[] | IssueUncheckedCreateWithoutAssignedToUserInput[]
+    connectOrCreate?: IssueCreateOrConnectWithoutAssignedToUserInput | IssueCreateOrConnectWithoutAssignedToUserInput[]
+    createMany?: IssueCreateManyAssignedToUserInputEnvelope
+    connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -7311,6 +7489,13 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type IssueUncheckedCreateNestedManyWithoutAssignedToUserInput = {
+    create?: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput> | IssueCreateWithoutAssignedToUserInput[] | IssueUncheckedCreateWithoutAssignedToUserInput[]
+    connectOrCreate?: IssueCreateOrConnectWithoutAssignedToUserInput | IssueCreateOrConnectWithoutAssignedToUserInput[]
+    createMany?: IssueCreateManyAssignedToUserInputEnvelope
+    connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -7345,6 +7530,20 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type IssueUpdateManyWithoutAssignedToUserNestedInput = {
+    create?: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput> | IssueCreateWithoutAssignedToUserInput[] | IssueUncheckedCreateWithoutAssignedToUserInput[]
+    connectOrCreate?: IssueCreateOrConnectWithoutAssignedToUserInput | IssueCreateOrConnectWithoutAssignedToUserInput[]
+    upsert?: IssueUpsertWithWhereUniqueWithoutAssignedToUserInput | IssueUpsertWithWhereUniqueWithoutAssignedToUserInput[]
+    createMany?: IssueCreateManyAssignedToUserInputEnvelope
+    set?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    update?: IssueUpdateWithWhereUniqueWithoutAssignedToUserInput | IssueUpdateWithWhereUniqueWithoutAssignedToUserInput[]
+    updateMany?: IssueUpdateManyWithWhereWithoutAssignedToUserInput | IssueUpdateManyWithWhereWithoutAssignedToUserInput[]
+    deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -7371,6 +7570,20 @@ export namespace Prisma {
     update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type IssueUncheckedUpdateManyWithoutAssignedToUserNestedInput = {
+    create?: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput> | IssueCreateWithoutAssignedToUserInput[] | IssueUncheckedCreateWithoutAssignedToUserInput[]
+    connectOrCreate?: IssueCreateOrConnectWithoutAssignedToUserInput | IssueCreateOrConnectWithoutAssignedToUserInput[]
+    upsert?: IssueUpsertWithWhereUniqueWithoutAssignedToUserInput | IssueUpsertWithWhereUniqueWithoutAssignedToUserInput[]
+    createMany?: IssueCreateManyAssignedToUserInputEnvelope
+    set?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[]
+    update?: IssueUpdateWithWhereUniqueWithoutAssignedToUserInput | IssueUpdateWithWhereUniqueWithoutAssignedToUserInput[]
+    updateMany?: IssueUpdateManyWithWhereWithoutAssignedToUserInput | IssueUpdateManyWithWhereWithoutAssignedToUserInput[]
+    deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -7415,6 +7628,21 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -7486,32 +7714,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -7528,6 +7730,17 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7582,6 +7795,66 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type UserCreateWithoutAssigedIssuesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    hashedPassword?: string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssigedIssuesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    hashedPassword?: string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssigedIssuesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssigedIssuesInput, UserUncheckedCreateWithoutAssigedIssuesInput>
+  }
+
+  export type UserUpsertWithoutAssigedIssuesInput = {
+    update: XOR<UserUpdateWithoutAssigedIssuesInput, UserUncheckedUpdateWithoutAssigedIssuesInput>
+    create: XOR<UserCreateWithoutAssigedIssuesInput, UserUncheckedCreateWithoutAssigedIssuesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssigedIssuesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssigedIssuesInput, UserUncheckedUpdateWithoutAssigedIssuesInput>
+  }
+
+  export type UserUpdateWithoutAssigedIssuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssigedIssuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -7590,6 +7863,7 @@ export namespace Prisma {
     hashedPassword?: string | null
     image?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -7600,6 +7874,7 @@ export namespace Prisma {
     hashedPassword?: string | null
     image?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueUncheckedCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -7626,6 +7901,7 @@ export namespace Prisma {
     hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -7636,6 +7912,7 @@ export namespace Prisma {
     hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUncheckedUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -7646,6 +7923,7 @@ export namespace Prisma {
     hashedPassword?: string | null
     image?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -7656,6 +7934,7 @@ export namespace Prisma {
     hashedPassword?: string | null
     image?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    assigedIssues?: IssueUncheckedCreateNestedManyWithoutAssignedToUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -7682,6 +7961,7 @@ export namespace Prisma {
     hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -7692,6 +7972,7 @@ export namespace Prisma {
     hashedPassword?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    assigedIssues?: IssueUncheckedUpdateManyWithoutAssignedToUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -7751,6 +8032,33 @@ export namespace Prisma {
 
   export type SessionCreateManyUserInputEnvelope = {
     data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type IssueCreateWithoutAssignedToUserInput = {
+    title: string
+    description: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IssueUncheckedCreateWithoutAssignedToUserInput = {
+    id?: number
+    title: string
+    description: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IssueCreateOrConnectWithoutAssignedToUserInput = {
+    where: IssueWhereUniqueInput
+    create: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput>
+  }
+
+  export type IssueCreateManyAssignedToUserInputEnvelope = {
+    data: IssueCreateManyAssignedToUserInput | IssueCreateManyAssignedToUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -7814,6 +8122,35 @@ export namespace Prisma {
     expires?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type IssueUpsertWithWhereUniqueWithoutAssignedToUserInput = {
+    where: IssueWhereUniqueInput
+    update: XOR<IssueUpdateWithoutAssignedToUserInput, IssueUncheckedUpdateWithoutAssignedToUserInput>
+    create: XOR<IssueCreateWithoutAssignedToUserInput, IssueUncheckedCreateWithoutAssignedToUserInput>
+  }
+
+  export type IssueUpdateWithWhereUniqueWithoutAssignedToUserInput = {
+    where: IssueWhereUniqueInput
+    data: XOR<IssueUpdateWithoutAssignedToUserInput, IssueUncheckedUpdateWithoutAssignedToUserInput>
+  }
+
+  export type IssueUpdateManyWithWhereWithoutAssignedToUserInput = {
+    where: IssueScalarWhereInput
+    data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutAssignedToUserInput>
+  }
+
+  export type IssueScalarWhereInput = {
+    AND?: IssueScalarWhereInput | IssueScalarWhereInput[]
+    OR?: IssueScalarWhereInput[]
+    NOT?: IssueScalarWhereInput | IssueScalarWhereInput[]
+    id?: IntFilter<"Issue"> | number
+    title?: StringFilter<"Issue"> | string
+    description?: StringFilter<"Issue"> | string
+    status?: EnumStatusFilter<"Issue"> | $Enums.Status
+    createdAt?: DateTimeFilter<"Issue"> | Date | string
+    updatedAt?: DateTimeFilter<"Issue"> | Date | string
+    assignedToUserId?: StringNullableFilter<"Issue"> | string | null
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -7832,6 +8169,15 @@ export namespace Prisma {
     id?: string
     sessionToken: string
     expires: Date | string
+  }
+
+  export type IssueCreateManyAssignedToUserInput = {
+    id?: number
+    title: string
+    description: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -7892,6 +8238,32 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     sessionToken?: StringFieldUpdateOperationsInput | string
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueUpdateWithoutAssignedToUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueUncheckedUpdateWithoutAssignedToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueUncheckedUpdateManyWithoutAssignedToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
