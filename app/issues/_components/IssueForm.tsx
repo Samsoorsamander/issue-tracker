@@ -52,9 +52,15 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           placeholder="Title"
           {...register("title")}
         />
-
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
+        <TextField.Root
+          defaultValue={issue?.status}
+          size="3"
+          placeholder="Status"
+          {...register("status")}
+        />
+        <ErrorMessage>{errors.status?.message}</ErrorMessage>
         <Controller
           control={control}
           name="description"
