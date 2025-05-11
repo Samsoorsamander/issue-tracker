@@ -1,11 +1,11 @@
 "use client";
-import { User } from "@/app/generated/prisma";
+import { Issue, User } from "@/app/generated/prisma";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Skeleton } from "@/app/components";
 
-const AssgineeSelect = () => {
+const AssgineeSelect = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
     error,
@@ -22,7 +22,11 @@ const AssgineeSelect = () => {
   if (error) return null;
 
   return (
-    <Select.Root>
+    <Select.Root
+      onValueChange={(userId) => {
+        axios.patch("/api/issues/" + issue.id, { assignedToUserId: userId });
+      }}
+    >
       <Select.Trigger placeholder="Assign..." />
       <Select.Content>
         <Select.Group>
