@@ -1,33 +1,48 @@
-// app/issues/page.tsx or app/issues/IssuePage.tsx (server component)
-
 import { prisma } from "@/prisma/client";
-import { Status, Issue } from "../generated/prisma";
+import IssueTable, { columnNames } from "./IssueTable";
+import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
+import { Issue, Status } from "../generated/prisma";
 import IssueAction from "./IssueAction";
-import IssueTable from "./IssueTable"; // NEW: Import client component
 
 interface Props {
-  searchParams: { status?: Status; orderBy?: keyof Issue };
+  searchParams: Promise<{ status: Status; orderBy: keyof Issue; page: string }>;
 }
 
-const IssuePage = async ({ searchParams }: Props) => {
-  const statuses = Object.values(Status);
-  const status = statuses.includes(searchParams.status!)
-    ? searchParams.status
+export default async function IssuePage({ searchParams }: Props) {
+  const orderByParams = (await searchParams).orderBy;
+
+  const statues = Object.values(Status);
+  const status = statues.includes((await searchParams).status)
+    ? (await searchParams).status
     : undefined;
 
-  const orderBy = searchParams.orderBy;
+  const orderBy = columnNames.includes(orderByParams)
+    ? { [orderByParams]: "asc" }
+    : undefined;
+
+  const resolvedParams = await searchParams;
+  const page = Number(resolvedParams.page) || 1;
+  const pageSize = 10;
 
   const issues = await prisma.issue.findMany({
     where: { status },
-    orderBy: orderBy ? { [orderBy]: "asc" } : undefined,
+    orderBy: orderBy /**TODO: fixed*/,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
 
   return (
-    <div>
+    <Flex direction="column" gap="3">
       <IssueAction />
-      <IssueTable issues={issues} searchParams={searchParams} />
-    </div>
+      <IssueTable searchParams={searchParams} issues={issues} />
+    </Flex>
   );
-};
+}
 
-export default IssuePage;
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues",
+};
