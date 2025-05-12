@@ -1,7 +1,9 @@
+import Pagination from "./components/Pagination";
+
 export default async function Home() {
   return (
     <main>
-      <h1>Hello Friends</h1>
+      <Pagination pageSize={10} currentPage={20} itemCount={200} />
     </main>
   );
 }
