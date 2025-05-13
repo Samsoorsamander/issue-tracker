@@ -1,9 +1,9 @@
 "use client";
 import { ErrorMessage, Spinner } from "@/app/components";
-import { Issue } from "@/app/generated/prisma";
+import { Issue, Status } from "@/app/generated/prisma";
 import { issueSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout, TextField } from "@radix-ui/themes";
+import { Button, Callout, Select, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,13 @@ import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
 
 type IssueFormData = z.infer<typeof issueSchema>;
+
+const statuses: { label: string; value: Status }[] = [
+  { label: "Open", value: "OPEN" },
+  { label: "Close", value: "CLOSE" },
+  { label: "In progress", value: "IN_PROGRESS" },
+];
+
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
     register,
@@ -53,14 +60,32 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           {...register("title")}
         />
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
-
+        {/* 
         <TextField.Root
           defaultValue={issue?.status}
           size="3"
           placeholder="Status"
           {...register("status")}
         />
-        <ErrorMessage>{errors.status?.message}</ErrorMessage>
+        <ErrorMessage>{errors.status?.message}</ErrorMessage> */}
+        <Controller
+          name="status"
+          control={control}
+          defaultValue={issue?.status || "OPEN"}
+          render={({ field }) => (
+            <Select.Root value={field.value} onValueChange={field.onChange}>
+              <Select.Trigger placeholder="Select status" />
+              <Select.Content>
+                {statuses.map((status) => (
+                  <Select.Item key={status.value} value={status.value}>
+                    {status.label}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select.Root>
+          )}
+        />
+
         <Controller
           control={control}
           name="description"
