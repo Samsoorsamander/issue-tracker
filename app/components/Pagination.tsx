@@ -23,8 +23,8 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   if (pageCount <= 1) return null;
 
   const changePage = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString()); // ✅ Call it to get actual params
-    params.set("page", page.toString()); // ✅ Update only the page param
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
     router.push("?" + params.toString());
   };
 

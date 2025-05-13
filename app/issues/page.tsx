@@ -4,6 +4,7 @@ import { Flex } from "@radix-ui/themes";
 import { Metadata } from "next";
 import { Issue, Status } from "../generated/prisma";
 import IssueAction from "./IssueAction";
+import Pagination from "../components/Pagination";
 
 interface Props {
   searchParams: Promise<{ status: Status; orderBy: keyof Issue; page: string }>;
@@ -25,9 +26,11 @@ export default async function IssuePage({ searchParams }: Props) {
   const page = Number(resolvedParams.page) || 1;
   const pageSize = 10;
 
+  const issueCount = await prisma.issue.count({ where: { status } });
+
   const issues = await prisma.issue.findMany({
     where: { status },
-    orderBy: orderBy /**TODO: fixed*/,
+    orderBy: orderBy,
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
@@ -36,6 +39,11 @@ export default async function IssuePage({ searchParams }: Props) {
     <Flex direction="column" gap="3">
       <IssueAction />
       <IssueTable searchParams={searchParams} issues={issues} />
+      <Pagination
+        currentPage={page}
+        pageSize={pageSize}
+        itemCount={issueCount}
+      />
     </Flex>
   );
 }
