@@ -21,9 +21,9 @@ const IssueSummary = ({ open, inProgress, close }: Props) => {
   ];
 
   return (
-    <Flex>
+    <Flex gap="5">
       {containers.map((container) => (
-        <Card key={container.value}>
+        <Card key={container.label}>
           <Flex direction="column" gap="1">
             <Link
               className="text-sm font-medium"

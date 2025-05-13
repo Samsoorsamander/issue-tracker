@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classNames from "classnames";
 import { Avatar, Box, DropdownMenu, Flex, Text } from "@radix-ui/themes";
@@ -12,13 +11,14 @@ const NavBar = () => {
   return (
     <nav className="text-black mb-5 border-b py-3 px-5">
       <Box className="lg:px-20">
-        <Flex justify="between">
+        <Flex justify="between" align="center">
           <Flex gap="3" align="center">
             <Link href={"/"}>
               <AiFillBug />
             </Link>
             <NavLinks />
           </Flex>
+
           <AuthStatus />
         </Flex>
       </Box>
