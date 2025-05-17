@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { Avatar, Box, DropdownMenu, Flex, Text } from "@radix-ui/themes";
 import { useSession, signOut } from "next-auth/react";
 import { Skeleton } from "@/app/components";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NavBar = () => {
   return (
@@ -14,11 +15,11 @@ const NavBar = () => {
         <Flex justify="between" align="center">
           <Flex gap="3" align="center">
             <Link href={"/"}>
-              <AiFillBug />
+              <AiFillBug size="2rem" color="red" />
             </Link>
             <NavLinks />
           </Flex>
-
+          <ThemeToggle />
           <AuthStatus />
         </Flex>
       </Box>
@@ -43,6 +44,7 @@ const NavLinks = () => {
             href={link.href}
             className={classNames({
               "nav-link": true,
+
               "!text-zinc-900": link.href === currentPath,
             })}
           >
