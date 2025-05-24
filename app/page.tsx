@@ -4,7 +4,7 @@ import { Flex, Grid } from "@radix-ui/themes";
 import IssueSummary from "./IssueSummary";
 import LatestIssues from "./LatestIssues";
 import { Metadata } from "next";
-
+import { Analytics } from "@vercel/analytics/react";
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } });
   const inProgress = await prisma.issue.count({
@@ -19,6 +19,7 @@ export default async function Home() {
         <IssueChart open={open} close={close} inProgress={inProgress} />
       </Flex>
       <LatestIssues />
+      <Analytics />
     </Grid>
   );
 }
